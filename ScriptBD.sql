@@ -151,7 +151,7 @@ GO
 INSERT [dbo].[Cards] ([CardId], [AccountId], [BankId], [OwnerName], [Balance], [SocialStatusId]) 
 VALUES (1, 1, 1, 'Jack', 43.43, 1);
 INSERT [dbo].[Cards] ([CardId], [AccountId], [BankId], [OwnerName], [Balance], [SocialStatusId]) 
-VALUES (2, NULL, 'John', 13.23, 4);
+VALUES (2, NULL, 1, 'John', 13.23, 4);
 INSERT [dbo].[Cards] ([CardId], [AccountId], [BankId], [OwnerName], [Balance], [SocialStatusId]) 
 VALUES (3, 2, 2, 'Vladislav', 75.34, 2);
 INSERT [dbo].[Cards] ([CardId], [AccountId], [BankId], [OwnerName], [Balance], [SocialStatusId]) 
@@ -164,7 +164,7 @@ GO
 
 --Date:17.02.2022 10:00
 ALTER TABLE [dbo].[Filials] ADD CONSTRAINT [FK_Filials_BankId] FOREIGN KEY([BankId]) 
-REFERENCES [dbo].[Bank] ([BankId]);
+REFERENCES [dbo].[Banks] ([BankId]);
 GO
 
 ALTER TABLE [dbo].[Filials] ADD CONSTRAINT [FK_Filials_CityId] FOREIGN KEY([CityId])
@@ -191,7 +191,7 @@ GO
 
 --Date:17.02.2022 10:10
 ALTER TABLE [dbo].[Clients_Statuses] ADD CONSTRAINT [FK_Clients_Statuses_SocialStatusId] FOREIGN KEY ([SocialStatusId])
-REFERENCES [dbo].[SocialStatus] ([SocialStatusId]);
+REFERENCES [dbo].[SocialStatuses] ([SocialStatusId]);
 GO
 
 ALTER TABLE [dbo].[Clients_Statuses] ADD CONSTRAINT [FK_Clients_Statuses_ClientId] FOREIGN KEY ([ClientId])

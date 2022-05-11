@@ -1,3 +1,13 @@
+--Написать процедуру которая будет переводить определённую сумму со счёта на карту этого аккаунта.  
+--При этом будем считать что деньги на счёту все равно останутся, просто сумма средств на карте увеличится. 
+--Например, у меня есть аккаунт на котором 1000 рублей и две карты по 300 рублей на каждой. Я могу перевести 
+--200 рублей на одну из карт, при этом баланс аккаунта останется 1000 рублей, а на картах будут суммы 300 и 500 
+--рублей соответственно. После этого я уже не смогу перевести 400 рублей с аккаунта ни на одну из карт, так как останется 
+--всего 200 свободных рублей (1000-300-500). Переводить БЕЗОПАСНО. То есть использовать транзакцию
+
+SELECT * FROM Accounts;
+SELECT * FROM Cards;
+
 DROP PROCEDURE TransferMoneyFromAccountToCard
 GO
 CREATE PROCEDURE TransferMoneyFromAccountToCard
@@ -22,15 +32,16 @@ BEGIN
 
 	BEGIN TRANSACTION
 
-	UPDATE Accounts 
-	SET Balance = Balance - @Sum
-	WHERE Accounts.AccountId = @AccountId
+	--Removed because the task condition has changed. 29.03.2022
+	--UPDATE Accounts 
+	--SET Balance = Balance - @Sum
+	--WHERE Accounts.AccountId = @AccountId
 
 	UPDATE Cards
 	SET Balance = Balance + @Sum
 	WHERE Cards.CardId = @CardId AND Cards.AccountId = @AccountId
 
-	IF @@TRANCOUNT = 2
+	IF @@TRANCOUNT = 1
 		BEGIN
 			PRINT 'The transaction completed successfully'
 			COMMIT TRANSACTION 
@@ -41,3 +52,10 @@ BEGIN
 			ROLLBACK TRANSACTION
 		END
 END;
+
+GO
+EXEC TransferMoneyFromAccountToCard 1, 1, 5
+GO
+
+SELECT * FROM Accounts;
+SELECT * FROM Cards;
